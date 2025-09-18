@@ -36,10 +36,11 @@ class Args:
         self.pose_model = config['MODEL']['POSE_MODEL']
         
         ## --- Visualize ---
-        self.show_result_im = config['VISUALIZE']['SHOE_RESULT_IM']
+        self.show_result_im = config['VISUALIZE']['SHOW_RESULT_IM']
 
         # --- Dataset settings ---
         self.data_num                = config['DATA']['DATA_NUM']
+        self.data_dir                = config['DATA']['DATA_DIR']
         self.data_type               = config['DATA']['DATA_TYPE']
         self.data_img_dir            = config['DATA']['DATA_IMG_DIR']
         self.data_save_txt_dir       = config['DATA']['DATA_SAVE_DETECT_TXT_DIR']
@@ -47,6 +48,11 @@ class Args:
         
         
         # --- labelmapping ---
+        self.enable_mapping = config['MAPPING']['ENABLE']
         self.label_mapping = config['MAPPING']['LABEL_MAPPING']
         self.mapping_input_label_dir = config['MAPPING']['INPUT_LABEL_DIR']
         self.mapping_output_label_dir = config['MAPPING']['OUTPUT_LABEL_DIR']
+        
+        # ---Save ---
+        self.save_result_im = config['SAVE']['RESULT_IMAGE']
+        self.save_result_im_resolution = config['SAVE']['RESULT_IM_RESOLUTION']
