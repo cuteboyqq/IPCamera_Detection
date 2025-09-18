@@ -1,0 +1,47 @@
+GENERATE_LABEL_TASK:
+  TASK_COCO_DETECTION: False   # Whether to generate detection labels from COCO2017 dataset only
+  TASK_FACE_DETECTION: False   # Whether to generate detection labels from face dataset only
+  TASK_POSE_DETECTION: False   # Whether to generate pose (keypoint) detection labels only
+  TASK_MULTI_DETECTION: True   # Enable multi-task labeling (merge COCO, face, and pose detections together)
+
+MD_ENABLE_LABEL:
+  COCO2017: True   # Use COCO2017 labels when TASK_MULTI_DETECTION is enabled
+  FACE: True       # Use face labels when TASK_MULTI_DETECTION is enabled
+  POSE: True       # Use pose (keypoint) labels when TASK_MULTI_DETECTION is enabled
+
+LABEL_VALUE:
+  FACE: 80   # Category index to assign for face labels (e.g., start after COCO classes)
+  POSE: 0    # Category index offset for pose labels (set to 0 if pose labels start from scratch)
+
+MODEL:
+  DETECT_MODEL: yolo11x.pt        # Pretrained detection model for COCO2017 objects
+  FACE_MODEL: yolov11l-face.pt     # Pretrained face detection model
+  POSE_MODEL: yolo11x-pose.pt     # Pretrained pose (keypoint) detection model
+
+
+VISUALIZE:
+  SHOE_RESULT_IM: False
+
+DATA:
+  DATA_NUM: 100000   # Maximum number of images to process (e.g., 3478 for GoFocus dataset, here set to 100k)
+  DATA_TYPE: ""      # Data split type, e.g., 'train', 'val', or "" for default
+  DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/images/train2017"  # Directory containing source images
+  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"
+  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/lane/points/train2017-80cls"
+
+
+MAPPING:
+  INPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"
+  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"
+  LABEL_MAPPING:
+    0: 0
+    2: 1
+    1: 2
+    3: 3
+    7: 4
+    5: 5
+    56: 6
+    16: 7
+    24: 8
+    15: 9
+
