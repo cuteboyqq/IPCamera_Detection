@@ -76,4 +76,4 @@ class FaceDetection(BaseDataset):
             cv2.imwrite(str(result_path), vis_img)
             # print(f"[INFO] Saved result image: {result_path}")
         
-        return img
+        return image if image is not None else img

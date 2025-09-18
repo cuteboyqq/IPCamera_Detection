@@ -10,15 +10,6 @@ class PoseDetection(BaseDataset):
         self.skeleton_save_dir = Path(self.data_dir) / "labels" / "lane" / "points" / "visual_points"  # save dir for drawn images
         self.skeleton_save_dir.mkdir(parents=True, exist_ok=True)
 
-        # Ultralytics COCO skeleton pairs (17 keypoints)
-        # self.SKELETON = [
-        #     (0, 1), (1, 2), (2, 3), (3, 4),
-        #     (1, 5), (5, 6), (6, 7),
-        #     (1, 8), (8, 9), (9, 10),
-        #     (8, 12), (12, 13), (13, 14),
-        #     (0, 15), (0, 16), (15, 17), (16, 18)  # if model has 19 kpts
-        # ]
-        
         self.SKELETON = [
             [0, 1], [0, 2], [1, 3], [2, 4], 
             [0, 5], [0, 6], [5, 7], [7, 9], 
@@ -69,7 +60,13 @@ class PoseDetection(BaseDataset):
                         cv2.circle(img, (px, py), 4, (0,255,0), -1)
 
                     f.write(" ".join(label_parts) + "\n")
-
+                    # Draw bounding box
+                    # x1 = int(cx - w/2)
+                    # y1 = int(cy - h/2)
+                    # x2 = int(cx + w/2)
+                    # y2 = int(cy + h/2)
+                    # cv2.rectangle(image if image is not None else img,(x1,y1),(x2,y2),(255,0,0),2)
+                    
                     # Draw skeleton
                     for i, (j1, j2) in enumerate(self.SKELETON):
                         if j1 < len(points) and j2 < len(points):
@@ -77,14 +74,14 @@ class PoseDetection(BaseDataset):
                             x2, y2, v2 = points[j2]
                             # if v1 > 0.5 and v2 > 0.5:  # draw only visible joints
                             color = self.COLORS[i % len(self.COLORS)]
-                            cv2.line(img, (x1, y1), (x2, y2), color, 2)
+                            cv2.line(image if image is not None else img, (x1, y1), (x2, y2), color, 2)
 
         if self.save_result_im:
             # Save result image
             im_h,im_w = self.save_result_im_resolution[:2]
             save_path = self.skeleton_save_dir / Path(img_path).name
             # resize to (h=384, w=640) before saving
-            vis_img = cv2.resize(img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)
+            vis_img = cv2.resize(image if image is not None else img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)
             cv2.imwrite(str(save_path), vis_img)
             # print(f"Saved visualization to {save_path}")
 
