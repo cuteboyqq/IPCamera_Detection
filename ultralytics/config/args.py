@@ -53,11 +53,11 @@ class Args:
         
         
         # --- labelmapping ---
-        self.enable_mapping = config['MAPPING']['ENABLE']
-        self.label_mapping = config['MAPPING']['LABEL_MAPPING']
-        self.mapping_input_label_dir = config['MAPPING']['INPUT_LABEL_DIR']
-        self.mapping_output_label_dir = config['MAPPING']['OUTPUT_LABEL_DIR']
-        self.mapping_label_name = config['MAPPING']['MAPPING_LABEL_NAME']
+        self.enable_mapping = config['COCO2017_MAPPING']['ENABLE']
+        self.label_mapping = config['COCO2017_MAPPING']['LABEL_MAPPING']
+        self.mapping_input_label_dir = config['COCO2017_MAPPING']['INPUT_LABEL_DIR']
+        self.mapping_output_label_dir = config['COCO2017_MAPPING']['OUTPUT_LABEL_DIR']
+        self.mapping_label_name = config['COCO2017_MAPPING']['MAPPING_LABEL_NAME']
         
         # ---Save ---
         self.save_result_im = config['SAVE']['RESULT_IMAGE']

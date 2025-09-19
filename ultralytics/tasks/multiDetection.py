@@ -19,7 +19,7 @@ class MultiDetectTask(BaseDataset):
         self.face_det = FaceDetection(args)
         self.pose_det = PoseDetection(args)
         
-    def Get_Multi_Detection_YOLO_Txt_Label(self):
+    def Auto_labeling_tools(self):
         
         img_path_list = []  
         

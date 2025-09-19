@@ -2,6 +2,7 @@ from pathlib import Path
 from engine.dataset import BaseDataset
 import cv2
 import random
+from tqdm import tqdm
 
 COCO_CLASSES = [
     "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train",
@@ -30,6 +31,7 @@ def get_color(cls_id):
         )
     return COLORS[cls_id]
 
+img_extension = ['*.jpg', '*.png', '*.bmp', '*.jpeg']
 
 class COCODetection(BaseDataset):
     def __init__(self,args):
@@ -37,8 +39,20 @@ class COCODetection(BaseDataset):
         # Add an output directory for saving visualized results
         self.result_img_dir = Path(args.data_save_txt_dir).parent / "vis_results"
         self.result_img_dir.mkdir(parents=True, exist_ok=True)
+    
+    
+    def Auto_labeling_tools(self):
+        img_path_list=[]
+        for ext in img_extension:
+            paths = list(Path(self.data_img_dir).glob(ext))
+            img_path_list.extend(paths)
         
-    def Save_YOLO_txt_Labels(self, img_path, image):
+        img_path_list = sorted(img_path_list,key=lambda p: str(p))
+        
+        for img_path in tqdm(img_path_list,desc="Auto Labeling COCO2017 Detection..."):
+            self.Save_YOLO_txt_Labels(img_path=img_path)    
+    
+    def Save_YOLO_txt_Labels(self, img_path, image=None):
         img = cv2.imread(img_path)
         img_h,img_w = img.shape[:2]
         # print(f"img_h:{img_h}, img_w:{img_w}")
@@ -105,7 +119,7 @@ class COCODetection(BaseDataset):
             key = cv2.waitKey(0)
             
         # === Save annotated image if enabled ===
-        if self.save_result_im and not self.md_enable_face :
+        if self.save_result_im and not self.task_face_detection :
             im_h,im_w = self.save_result_im_resolution[:2]
             result_path = self.result_img_dir / Path(img_path).name
             if not result_path.exists():

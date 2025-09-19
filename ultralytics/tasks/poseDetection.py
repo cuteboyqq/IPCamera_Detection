@@ -1,6 +1,8 @@
 import cv2
 from engine.dataset import BaseDataset
 from pathlib import Path
+from tqdm import tqdm
+img_extension=['*.jpg', '*.png', '*.bmp', '*.jpeg']
 
 
 class PoseDetection(BaseDataset):
@@ -21,8 +23,21 @@ class PoseDetection(BaseDataset):
         self.COLORS = [(255,0,0), (0,255,0), (0,0,255),
                        (255,255,0), (255,0,255), (0,255,255),
                        (128,0,128), (255,165,0), (0,128,255)]
+        
+    
+    def Auto_labeling_tools(self):
+        img_path_list = []
+        for ext in img_extension:
+            paths = list(Path(self.data_img_dir).glob(ext))
+            img_path_list.extend(paths)
+            
+        img_path_list = sorted(img_path_list,key=lambda p: str(p))
+        
+        for img_path in tqdm(img_path_list,desc="Auto Labeling Pose Detection..."):
+            self.Save_YOLO_txt_Labels(img_path)
 
-    def Save_YOLO_txt_Labels(self, img_path, image):
+        
+    def Save_YOLO_txt_Labels(self, img_path, image=None):
         img = cv2.imread(str(img_path))
         img_h, img_w = img.shape[:2]
 

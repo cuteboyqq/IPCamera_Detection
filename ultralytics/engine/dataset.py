@@ -168,7 +168,40 @@ class BaseDataset:
                 Otherwise, returns the original image.
         """
         return NotImplemented
+    
+    
+    def Auto_labeling_tools(self):
+        """
+        Automatic labeling entry point for dataset subclasses.
 
+        This method should be implemented by dataset-specific subclasses 
+        (e.g., COCO2017 detection, face detection, pose detection). 
+        It provides the main pipeline to:
+        
+        1. Load images from the dataset directory.
+        2. Run the corresponding detection or pose estimation model.
+        3. Generate YOLO-format labels (bounding boxes and/or keypoints).
+        4. Save labels as `.txt` files in the configured output directory.
+        5. Optionally visualize and/or save annotated result images.
+
+        Subclasses should implement dataset-specific logic, for example:
+            - **COCO2017Detection**: Save object detection bounding boxes 
+            using COCO-trained model.
+            - **FaceDetection**: Save face bounding boxes with the face model.
+            - **PoseDetection**: Save human pose keypoints and optionally 
+            skeleton connections.
+
+        Args:
+            None
+
+        Returns:
+            None
+                The function runs the auto-labeling process and saves results 
+                to disk (labels and optionally annotated images).
+        """
+        return NotImplemented
+    
+    
     def filter_and_remap_yolo_labels(self):
         """
         Filters and remaps YOLO labels using pathlib.
