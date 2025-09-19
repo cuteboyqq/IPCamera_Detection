@@ -9,48 +9,51 @@ This labeling tool is designed to automatically generate detection labels for co
 - **🤸 Pose Detection**: Human keypoint/pose estimation
 - **🚀 Multi-Task Mode**: Combines all three detection types in a single run
 
+## 🚀 Set up environment 
 
-## Set up environment
-Setting up a virtual environment will keep your YOLO + OpenCV project clean and isolated from system packages. Since you’re on Ubuntu/Linux, here’s how you can do it step by step:
+Setting up a virtual environment will keep your YOLO + OpenCV project clean and isolated from system packages. Since you're on Ubuntu/Linux, here's how you can do it step by step:
 
-🔹 **1. Install venv (if not already installed)**
+🔹 **1. Install venv (if not already installed)** 📦
 ```python
 sudo apt update
 sudo apt install python3-venv -y
 ```
 
-🔹 **2. Create a virtual environment**
-
+🔹 **2. Create a virtual environment** 🏗️
 Navigate to your project folder, then run:
 ```python
 python3 -m venv env
 ```
-This will create a folder named env/ in your project.
+This will create a folder named `env/` in your project. 📁
 
-🔹 **3. Activate the virtual environment**
+🔹 **3. Activate the virtual environment** ⚡
 ```python
 source env/bin/activate
 ```
-When activated, your shell prompt will show (env) at the beginning.
+When activated, your shell prompt will show `(env)` at the beginning. ✅
 
-**To deactivate later:**
+**To deactivate later:** 🛑
 ```python
 deactivate
 ```
 
-🔹 **4. Install dependencies**
+🔹 **4. Install dependencies** 📥
 ```python
-# pip install --upgrade pip setuptools wheel
+# Upgrade pip and install packages
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-🔹 **5. Verify environment**
+🔹 **5. Verify environment** 🔍
 ```python
 which python
 which pip
 ```
-Both should point to your project’s env/ directory, not system Python.
-⚡ Pro tip: If you use VS Code or PyCharm, you can set this env as your interpreter so scripts automatically run inside it.
+Both should point to your project's `env/` directory, not system Python. ✔️
+
+⚡ **Pro tip:** If you use VS Code or PyCharm, you can set this env as your interpreter so scripts automatically run inside it. 💡🎯
+
+
 ## Quick Start
 
 1. **📂 Must Do: Copy Required Files into Ultralytics Repository**
