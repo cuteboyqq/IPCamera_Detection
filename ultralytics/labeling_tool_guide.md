@@ -19,6 +19,7 @@ sudo apt install python3-venv -y
 ```
 
 🔹 **2. Create a virtual environment**
+
 Navigate to your project folder, then run:
 ```python
 python3 -m venv env
