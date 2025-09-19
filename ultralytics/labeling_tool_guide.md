@@ -17,6 +17,7 @@ This labeling tool is designed to automatically generate detection labels for co
    3. engine folder
    4. main_label.py script
    5. yolo11l-face.pt model download from https://github.com/YapaLab/yolo-face
+   
   Below is tree to after copy code inot ultralytics (Note: in this directory also have more folders and script from ultralytics and this tree did not present here )
 ```yaml
 .
