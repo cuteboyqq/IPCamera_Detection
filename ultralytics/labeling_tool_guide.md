@@ -16,26 +16,31 @@ Setting up a virtual environment will keep your YOLO + OpenCV project clean and 
 sudo apt update
 sudo apt install python3-venv -y
 ```
+
 🔹 **2. Create a virtual environment**
 Navigate to your project folder, then run:
 ```python
 python3 -m venv env
 ```
 This will create a folder named env/ in your project.
+
 🔹 **3. Activate the virtual environment**
 ```python
 source env/bin/activate
 ```
 When activated, your shell prompt will show (env) at the beginning.
+
 **To deactivate later:**
 ```python
 deactivate
 ```
+
 🔹 **4. Install dependencies**
 ```python
 # pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
+
 🔹 **5. Verify environment**
 ```python
 which python
