@@ -11,6 +11,33 @@ This labeling tool is designed to automatically generate detection labels for co
 
 ## Quick Start
 
+0. **[Must Do] Copy below folder & script & face model into ultarlytics**, because need to use ultralytics model to do auto labeling
+   1. tasks folder
+   2. config folder
+   3. engine folder
+   4. main_label.py script
+   5. yolo11l-face.pt model download from https://github.com/YapaLab/yolo-face
+  Below is tree to after copy code inot ultralytics (Note: in this directory also have more folders and script from ultralytics and this tree did not present here )
+```yaml
+.
+└── ultralytics
+    ├── yolov11l-face.pt
+    ├── tasks
+    │   ├── poseDetection.py
+    │   ├── multiDetection.py
+    │   ├── faceDetection.py
+    │   └── COCODetection.py
+    ├── main_label.py
+    ├── labeling_tool_guide.md
+    ├── engine
+    │   └── dataset.py
+    └── config
+        ├── config.yaml
+        └── args.py
+
+
+```
+
 1. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
 2. **Prepare your dataset**: Ensure images are in the specified directory
 3. **Run the labeling process**: Execute the main script
