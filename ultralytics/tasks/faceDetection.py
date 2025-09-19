@@ -33,6 +33,8 @@ class FaceDetection(BaseDataset):
             
         img_path_list = sorted(img_path_list, key=lambda p: str(p))
         
+        img_path_list = img_path_list[:self.data_num] if self.data_num<=len(img_path_list) else img_path_list
+        
         for img_path in tqdm(img_path_list, desc="Auto Labeling Face Detection..."):
             self.Save_YOLO_txt_Labels(img_path)
 
@@ -80,8 +82,8 @@ class FaceDetection(BaseDataset):
                         )
                                     
                  
-        if self.show_result_im:
-            cv2.imshow("Detection Auto Label",img)
+        if self.show_result_im and not self.md_enable_pose:
+            cv2.imshow("Detection Auto Label",image if image is not None else img)
             key = cv2.waitKey(0)
             
         # === Save annotated image if enabled ===

@@ -32,6 +32,7 @@ class PoseDetection(BaseDataset):
             img_path_list.extend(paths)
             
         img_path_list = sorted(img_path_list,key=lambda p: str(p))
+        img_path_list = img_path_list[:self.data_num] if self.data_num<=len(img_path_list) else img_path_list
         
         for img_path in tqdm(img_path_list,desc="Auto Labeling Pose Detection..."):
             self.Save_YOLO_txt_Labels(img_path)
@@ -76,12 +77,15 @@ class PoseDetection(BaseDataset):
                         cv2.circle(img, (px, py), 4, (0,255,0), -1)
 
                     f.write(" ".join(label_parts) + "\n")
+                    
+                    
                     # Draw bounding box
-                    # x1 = int(cx - w/2)
-                    # y1 = int(cy - h/2)
-                    # x2 = int(cx + w/2)
-                    # y2 = int(cy + h/2)
-                    # cv2.rectangle(image if image is not None else img,(x1,y1),(x2,y2),(255,0,0),2)
+                    if not self.task_coco_detection and not self.md_enable_coco2017:
+                        x1 = int((cx - w/2)*img_w)
+                        y1 = int((cy - h/2)*img_h)
+                        x2 = int((cx + w/2)*img_w)
+                        y2 = int((cy + h/2)*img_h)
+                        cv2.rectangle(image if image is not None else img,(x1,y1),(x2,y2),(255,0,0),2)
                     
                     # Draw skeleton
                     for i, (j1, j2) in enumerate(self.SKELETON):
@@ -99,6 +103,10 @@ class PoseDetection(BaseDataset):
                     cv2.putText(image if image is not None else img,
                                 conf, (x, y-35),cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
 
+        if self.show_result_im:
+            cv2.imshow("Pose detection",image if image is not None else img)
+            cv2.waitKey(0)
+        
         if self.save_result_im:
             # Save result image
             im_h,im_w = self.save_result_im_resolution[:2]

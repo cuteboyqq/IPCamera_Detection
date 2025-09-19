@@ -29,8 +29,11 @@ class MultiDetectTask(BaseDataset):
         
         img_path_list = sorted(img_path_list, key=lambda p: str(p))
         
-        for img_path in tqdm(img_path_list,desc=f"Processing images..."):
+        img_path_list = img_path_list[:self.data_num] if self.data_num<=len(img_path_list) else img_path_list
+        
+        for img_path in tqdm(img_path_list,desc=f"Processing Multi-Task Labeling..."):
             # print(img_path)
+            result_img = None
             if self.md_enable_coco2017:
                 result_img = self.coco_det.Save_YOLO_txt_Labels(img_path=img_path, image=None)
                 

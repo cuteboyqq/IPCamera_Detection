@@ -1,13 +1,14 @@
-# Multi-Task Labeling Tool User Guide
+# 🏷️ Multi-Task Labeling Tool User Guide
 
-## Overview
+## 🌟 Overview
 
 This labeling tool is designed to automatically generate detection labels for computer vision datasets using pre-trained YOLO models. It supports three main detection tasks:
 
-- **COCO Object Detection**: Detects 80 common object classes from the COCO2017 dataset
-- **Face Detection**: Specialized face detection capabilities  
-- **Pose Detection**: Human keypoint/pose estimation
-- **Multi-Task Mode**: Combines all three detection types in a single run
+- **🎯 COCO Object Detection**: Detects 80 common object classes from the COCO2017 dataset
+- **👤 Face Detection**: Specialized face detection capabilities  
+- **🤸 Pose Detection**: Human keypoint/pose estimation
+- **🚀 Multi-Task Mode**: Combines all three detection types in a single run
+
 
 ## Set up environment
 Setting up a virtual environment will keep your YOLO + OpenCV project clean and isolated from system packages. Since you’re on Ubuntu/Linux, here’s how you can do it step by step:
@@ -85,9 +86,9 @@ python main_label.py
 ```
 5. **Review results**: Check generated labels and visualization images
 
-## Configuration Guide
+## 📋 Configuration Guide
 
-### Task Selection
+### 🎯 Task Selection
 
 Choose which detection tasks to enable:
 
@@ -99,9 +100,9 @@ GENERATE_LABEL_TASK:
   TASK_MULTI_DETECTION: True   # All tasks combined (recommended)
 ```
 
-**Recommendation**: Use `TASK_MULTI_DETECTION: True` for comprehensive labeling.
+**💡 Recommendation**: Use `TASK_MULTI_DETECTION: True` for comprehensive labeling.
 
-### Multi-Task Configuration
+### 🎛️ Multi-Task Configuration
 
 When using multi-task mode, specify which detection types to include:
 
@@ -112,7 +113,7 @@ MD_ENABLE_LABEL:
   POSE: True       # Include pose detection
 ```
 
-### Detection Confidence
+### 🎚️ Detection Confidence
 
 Set confidence thresholds for each detection type (0.0-1.0):
 
@@ -123,12 +124,12 @@ CONFIDENCE_THRESHOLD:
   POSE: 0.25
 ```
 
-**Guidelines**:
-- **0.1-0.3**: More detections, some false positives
-- **0.4-0.6**: Balanced precision/recall
-- **0.7-0.9**: High precision, may miss some objects
+**📊 Guidelines**:
+- **🟢 0.1-0.3**: More detections, some false positives
+- **🟡 0.4-0.6**: Balanced precision/recall
+- **🔴 0.7-0.9**: High precision, may miss some objects
 
-### Model Configuration
+### 🧠 Model Configuration
 
 Specify the pre-trained models to use:
 
@@ -139,14 +140,14 @@ MODEL:
   POSE_MODEL: yolo11x-pose.pt    # Pose estimation model
 ```
 
-**Model Options**:
-- **Nano (n)**: Fastest, least accurate
-- **Small (s)**: Good speed/accuracy balance
-- **Medium (m)**: Better accuracy
-- **Large (l)**: High accuracy
-- **Extra Large (x)**: Best accuracy, slowest
+**🏃 Model Options**:
+- **⚡ Nano (n)**: Fastest, least accurate
+- **🏃 Small (s)**: Good speed/accuracy balance
+- **🚶 Medium (m)**: Better accuracy
+- **🐌 Large (l)**: High accuracy
+- **🐢 Extra Large (x)**: Best accuracy, slowest
 
-### Dataset Paths
+### 📁 Dataset Paths
 
 Configure your dataset directory structure:
 
@@ -160,7 +161,7 @@ DATA:
   DATA_SAVE_POSE_TXT_DIR: "/path/to/pose_labels"         # Pose output
 ```
 
-### Label Configuration
+### 🏷️ Label Configuration
 
 Set category indices for different detection types:
 
@@ -170,7 +171,7 @@ LABEL_VALUE:
   POSE: 0    # Pose class ID (0 if separate from other classes)
 ```
 
-### Visualization Settings
+### 👀 Visualization Settings
 
 Control result visualization:
 
@@ -184,7 +185,7 @@ SAVE:
   RESULT_MAPPING_IMAGE: True         # Save class mapping visualizations
 ```
 
-### Class Mapping
+### 🔄 Class Mapping
 
 Remap COCO classes to a custom set:
 
@@ -217,14 +218,14 @@ Example:
 1 0.7 0.6 0.15 0.25 0.92
 ```
 
-### Pose Labels
+### 🤸 Pose Labels
 
 Keypoint format varies by model but typically includes:
 ```
 class_id center_x center_y width height keypoint_1_x keypoint_1_y keypoint_1_visible ...
 ```
 
-## Directory Structure
+## 📁 Directory Structure
 
 Organize your dataset as follows:
 
@@ -252,9 +253,9 @@ dataset/
     └── mapping_images/
 ```
 
-## Usage Examples
+## 🎮 Usage Examples
 
-### Basic Multi-Task Labeling
+### 🚀 Basic Multi-Task Labeling
 
 1. Set up multi-task detection:
 ```yaml
@@ -275,17 +276,15 @@ DATA_SAVE_DETECT_TXT_DIR: "/your/output/labels"
 
 3. Run the tool
 
-### COCO Detection Only
+### 🎯 COCO Detection Only
 
 ```yaml
 GENERATE_LABEL_TASK:
   TASK_COCO_DETECTION: True
-  TASK_FACE_DETECTION: False
-  TASK_POSE_DETECTION: False
   TASK_MULTI_DETECTION: False
 ```
 
-### Custom Class Mapping
+### 🎨 Custom Class Mapping
 
 To create a custom 5-class dataset from COCO:
 
@@ -296,51 +295,51 @@ MAPPING:
   MAPPING_LABEL_NAME: ["person", "car", "bus", "truck", "cat"]
 ```
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
-### Common Issues
+### ⚠️ Common Issues
 
-**No labels generated**:
+**❌ No labels generated**:
 - Check confidence thresholds (try lowering to 0.1)
 - Verify image paths are correct
 - Ensure models are downloaded/accessible
 
-**Too many false positives**:
+**❗ Too many false positives**:
 - Increase confidence thresholds (0.4-0.6)
 - Use smaller, more precise models
 
-**Missing detections**:
+**😔 Missing detections**:
 - Lower confidence thresholds
 - Use larger models (yolo11x vs yolo11n)
 
-**Path errors**:
+**📂 Path errors**:
 - Use absolute paths in configuration
 - Ensure directories exist or can be created
 - Check file permissions
 
-### Performance Optimization
+### 🚀 Performance Optimization
 
-**Speed up processing**:
+**⚡ Speed up processing**:
 - Use smaller models (yolo11n, yolo11s)
 - Set `SHOW_RESULT_IM: False`
 - Reduce `DATA_NUM` for testing
 - Use GPU if available
 
-**Improve accuracy**:
+**🎯 Improve accuracy**:
 - Use larger models (yolo11l, yolo11x)
 - Fine-tune confidence thresholds
 - Enable all detection types in multi-task mode
 
-## Best Practices
+## ✨ Best Practices
 
-1. **Start small**: Test with a few images first (`DATA_NUM: 10`)
-2. **Validate thresholds**: Review generated labels manually
-3. **Backup original data**: Keep copies before processing
-4. **Monitor disk space**: Large datasets generate many label files
-5. **Use version control**: Track configuration changes
-6. **Document mapping**: Keep records of class remapping decisions
+1. **🐣 Start small**: Test with a few images first (`DATA_NUM: 10`)
+2. **✅ Validate thresholds**: Review generated labels manually
+3. **💾 Backup original data**: Keep copies before processing
+4. **💽 Monitor disk space**: Large datasets generate many label files
+5. **📝 Use version control**: Track configuration changes
+6. **📋 Document mapping**: Keep records of class remapping decisions
 
-## Support
+## 🆘 Support
 
 For issues or questions:
 - Check configuration syntax against this guide

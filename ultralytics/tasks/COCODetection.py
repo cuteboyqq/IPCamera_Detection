@@ -49,6 +49,8 @@ class COCODetection(BaseDataset):
         
         img_path_list = sorted(img_path_list,key=lambda p: str(p))
         
+        img_path_list = img_path_list[:self.data_num] if self.data_num<=len(len(img_path_list)) else img_path_list
+        
         for img_path in tqdm(img_path_list,desc="Auto Labeling COCO2017 Detection..."):
             self.Save_YOLO_txt_Labels(img_path=img_path)    
     
@@ -114,9 +116,9 @@ class COCODetection(BaseDataset):
                             )
                                     
                  
-        if self.show_result_im:
-            cv2.imshow("Detection Auto Label",img)
-            key = cv2.waitKey(0)
+        if self.show_result_im and not self.md_enable_face and not self.md_enable_pose:
+            cv2.imshow("Detection Auto Label",image if image is not None else img)
+            cv2.waitKey(0)
             
         # === Save annotated image if enabled ===
         if self.save_result_im and not self.task_face_detection :

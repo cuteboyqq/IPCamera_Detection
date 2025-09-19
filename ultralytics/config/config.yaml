@@ -24,14 +24,14 @@ MODEL:
   POSE_MODEL: yolo11x-pose.pt    # Pretrained human pose (keypoint) model
 
 VISUALIZE:
-  SHOW_RESULT_IM: False   # Whether to display images with bounding boxes/keypoints during processing
+  SHOW_RESULT_IM: True   # Whether to display images with bounding boxes/keypoints during processing
 
 DATA:
-  DATA_NUM: 100000   # Maximum number of images to process (set high if no limit)
+  DATA_NUM: 99999   # Maximum number of images to process (set high if no limit)
   DATA_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12"   # Root dataset directory
   DATA_TYPE: ""      # Data split type, e.g., 'train', 'val', or "" for default
   DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/images/train2017"   # Directory of source images
-  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Directory to save COCO/face detection YOLO labels
+  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Directory to save COCO/face detection YOLO labels
   DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/lane/points/train2017-2025-09-19"   # Directory to save pose (keypoint) YOLO labels
 
 SAVE:
