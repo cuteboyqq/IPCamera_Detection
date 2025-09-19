@@ -45,38 +45,33 @@ Both should point to your project’s env/ directory, not system Python.
 ⚡ Pro tip: If you use VS Code or PyCharm, you can set this env as your interpreter so scripts automatically run inside it.
 ## Quick Start
 
-0. **[Must Do] Copy below folder & script & face model into ultarlytics https://github.com/ultralytics/ultralytics**, because need to use ultralytics model to do auto labeling
-   1. tasks folder
-   2. config folder
-   3. engine folder
+1. **📂 Must Do: Copy Required Files into Ultralytics Repository**
+   Before running the auto-labeling tools, you must copy the following folders, scripts, and model into the Ultralytics repository https://github.com/ultralytics/ultralytics
+, because the auto-labeling process depends on Ultralytics models.
+  **Files and folders to copy:**
+   1. tasks/ folder
+   2. config/ folder
+   3. engine/ folder
    4. main_label.py script
-   5. yolo11l-face.pt model download from https://github.com/YapaLab/yolo-face
+   5. yolo11l-face.pt model (download from https://github.com/YapaLab/yolo-face)
    
-  Below is tree to after copy code inot ultralytics (Note: in this directory also have more folders and script from ultralytics and this tree did not present here )
+  **Example directory structure after copying:**
 ```yaml
-.
-└── ultralytics
-    ├── yolov11l-face.pt
-    ├── tasks
-    │   ├── poseDetection.py
-    │   ├── multiDetection.py
-    │   ├── faceDetection.py
-    │   └── COCODetection.py
-    ├── main_label.py
-    ├── labeling_tool_guide.md
-    ├── engine
-    │   └── dataset.py
-    └── config
-        ├── config.yaml
-        └── args.py
-
-
+ultralytics/
+├── tasks/
+├── config/
+├── engine/
+├── main_label.py
+├── yolo11l-face.pt
+...
+# (Other original Ultralytics files and folders remain unchanged)
 ```
+⚠️ Warning: Do not overwrite existing Ultralytics files unless specifically instructed. Only add the required folders, scripts, and model listed above.
 
-1. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
-2. **Prepare your dataset**: Ensure images are in the specified directory
-3. **Run the labeling process**: Execute the main script
-4. **Review results**: Check generated labels and visualization images
+2. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
+3. **Prepare your dataset**: Ensure images are in the specified directory
+4. **Run the labeling process**: Execute the main script
+5. **Review results**: Check generated labels and visualization images
 
 ## Configuration Guide
 
