@@ -69,7 +69,7 @@ class FaceDetection(BaseDataset):
             key = cv2.waitKey(0)
             
         # === Save annotated image if enabled ===
-        if self.save_result_im:
+        if self.save_result_im and not self.md_enable_pose:
             im_h,im_w = self.save_result_im_resolution[:2]
             result_path = self.result_img_dir / Path(img_path).name
             vis_img = cv2.resize(image if image is not None else img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)

@@ -10,9 +10,9 @@ MD_ENABLE_LABEL:
   POSE: True       # Use pose labels in multi-task mode
 
 CONFIDENCE_THRESHOLD:
-  COCO2017: 0.50
+  COCO2017: 0.25
   FACE: 0.25
-  POSE: 0.50
+  POSE: 0.25
 
 LABEL_VALUE:
   FACE: 10   # Category index assigned for face labels (after COCO classes)
@@ -31,8 +31,8 @@ DATA:
   DATA_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12"   # Root dataset directory
   DATA_TYPE: ""      # Data split type, e.g., 'train', 'val', or "" for default
   DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/images/train2017"   # Source images
-  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Save detection labels
-  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/lane/points/train2017-80cls"   # Save pose labels
+  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Save detection labels
+  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/lane/points/train2017-2025-09-19"   # Save pose labels
 
 SAVE:
   RESULT_IMAGE: True   # Save images with visualized results
@@ -41,8 +41,8 @@ SAVE:
 
 MAPPING:
   ENABLE: True   # Apply class remapping
-  INPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Original labels
-  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Remapped labels
+  INPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Original labels (Not uesd now)
+  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Remapped labels (Not uesd now)
   LABEL_MAPPING: {0: 0, 2: 1, 1: 2, 3: 3, 7: 4, 5: 5, 56: 6, 16: 7, 24: 8, 15: 9, 80: 10}   # Original ID → new ID
   MAPPING_LABEL_NAME: ["person", "car", "bicycle", "motorcycle", "truck", "bus", "chair", "dog", "backpack", "cat", "face"]
 

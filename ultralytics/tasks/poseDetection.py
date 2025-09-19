@@ -38,10 +38,11 @@ class PoseDetection(BaseDataset):
         with new_label_path.open("w") as f:
             for r in results:
                 boxes = r.boxes.xywhn.cpu().numpy()
+                boxes_confs = r.boxes.conf.cpu().numpy()
                 kpts = r.keypoints.xyn.cpu().numpy()
                 kpts_conf = r.keypoints.conf.cpu().numpy() if r.keypoints.conf is not None else np.ones_like(kpts[:,:,0])
 
-                for box, kpt, confs in zip(boxes, kpts, kpts_conf):
+                for box, kpt, confs, box_conf in zip(boxes, kpts, kpts_conf, boxes_confs):
                     cx, cy, w, h = box
 
                     # Build YOLO line
@@ -75,6 +76,13 @@ class PoseDetection(BaseDataset):
                             # if v1 > 0.5 and v2 > 0.5:  # draw only visible joints
                             color = self.COLORS[i % len(self.COLORS)]
                             cv2.line(image if image is not None else img, (x1, y1), (x2, y2), color, 2)
+                            
+                    # Draw conf
+                    conf = f"{box_conf:.2f}"
+                    x = int((cx - w/2)*img_w)
+                    y = int((cy - h/2)*img_h)
+                    cv2.putText(image if image is not None else img,
+                                conf, (x, y-35),cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
 
         if self.save_result_im:
             # Save result image

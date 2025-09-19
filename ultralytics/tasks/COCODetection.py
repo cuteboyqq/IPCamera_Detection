@@ -57,8 +57,9 @@ class COCODetection(BaseDataset):
             for r in results:
                 boxes = r.boxes.xywhn.cpu().numpy()
                 cls_ids = r.boxes.cls.cpu().numpy().astype(int)
+                confs = r.boxes.conf.cpu().numpy() # ✅ get confidences
                 
-                for cls_id, box in zip(cls_ids,boxes):
+                for cls_id, box, conf in zip(cls_ids,boxes,confs):
                     cx,cy,w,h = box
                     new_class_id = None
                     if self.enable_mapping:
@@ -86,10 +87,11 @@ class COCODetection(BaseDataset):
                             label_name = None
                         
                         if label_name is not None:
+                            txt = f"{label_name} {conf:.2f}"
                             cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
                             cv2.putText(
                                 img,
-                                label_name,
+                                txt,
                                 (x1, y1 - 10),              # shift a little higher above box
                                 cv2.FONT_HERSHEY_SIMPLEX,
                                 1.0,                        # ⬅️ font scale (was 0.5)
@@ -103,7 +105,7 @@ class COCODetection(BaseDataset):
             key = cv2.waitKey(0)
             
         # === Save annotated image if enabled ===
-        if self.save_result_im:
+        if self.save_result_im and not self.md_enable_face :
             im_h,im_w = self.save_result_im_resolution[:2]
             result_path = self.result_img_dir / Path(img_path).name
             if not result_path.exists():
