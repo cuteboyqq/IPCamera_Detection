@@ -34,7 +34,7 @@ class FaceDetection(BaseDataset):
         
         Path(self.data_save_txt_dir).mkdir(parents=True, exist_ok=True)
         
-        results = self.face_model.predict(img, conf=0.25, verbose=False)
+        results = self.face_model.predict(img, conf=self.face_conf_th, verbose=False)
         
         with new_label_path.open('a') as f:
             for r in results:

@@ -8,4 +8,6 @@ if __name__=="__main__":
     
     if args.task_multi_detection:
         MD = MultiDetectTask(args)
+        MD.show_config(args)
         MD.Get_Multi_Detection_YOLO_Txt_Label()
+        

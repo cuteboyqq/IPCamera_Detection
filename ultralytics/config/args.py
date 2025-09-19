@@ -26,6 +26,11 @@ class Args:
         self.md_enable_face     = config['MD_ENABLE_LABEL']['FACE']
         self.md_enable_pose     = config['MD_ENABLE_LABEL']['POSE']
         
+        # -- Label-confidence threshold ---
+        self.coco2017_conf_th = config['CONFIDENCE_THRESHOLD']['COCO2017']
+        self.face_conf_th     = config['CONFIDENCE_THRESHOLD']['FACE']
+        self.pose_conf_th     = config['CONFIDENCE_THRESHOLD']['POSE']
+        
         # --- Label value ---
         self.face_label_value = config['LABEL_VALUE']['FACE']
         self.pose_label_value = config['LABEL_VALUE']['POSE']
@@ -52,7 +57,9 @@ class Args:
         self.label_mapping = config['MAPPING']['LABEL_MAPPING']
         self.mapping_input_label_dir = config['MAPPING']['INPUT_LABEL_DIR']
         self.mapping_output_label_dir = config['MAPPING']['OUTPUT_LABEL_DIR']
+        self.mapping_label_name = config['MAPPING']['MAPPING_LABEL_NAME']
         
         # ---Save ---
         self.save_result_im = config['SAVE']['RESULT_IMAGE']
         self.save_result_im_resolution = config['SAVE']['RESULT_IM_RESOLUTION']
+        self.save_mapping_result_im = config['SAVE']['RESULT_MAPPING_IMAGE']

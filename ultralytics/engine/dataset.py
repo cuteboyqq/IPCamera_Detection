@@ -29,6 +29,11 @@ class BaseDataset:
         self.md_enable_face     = args.md_enable_face
         self.md_enable_pose     = args.md_enable_pose
         
+        # -- Label-confidence threshold ---
+        self.coco2017_conf_th = args.coco2017_conf_th
+        self.face_conf_th     = args.face_conf_th
+        self.pose_conf_th     = args.pose_conf_th
+        
         # --- Label value ---
         self.face_label_value = args.face_label_value
         self.pose_label_value = args.pose_label_value
@@ -51,17 +56,94 @@ class BaseDataset:
         
         self.show_result_im = args.show_result_im
         
-      
-        
         # --- Mapping ---
         self.enable_mapping = args.enable_mapping
         self.label_mapping = args.label_mapping
         self.mapping_input_label_dir = args.mapping_input_label_dir
         self.mapping_output_label_dir = args.mapping_output_label_dir
+        self.mapping_label_name = args.mapping_label_name
         
+        # --- Save option ---
         self.save_result_im = args.save_result_im
         self.save_result_im_resolution =args.save_result_im_resolution
+        self.save_mapping_result_im = args.save_mapping_result_im
         
+        
+    def _bool_str(self, value):
+        """Return colored check or cross for booleans."""
+        return "✅ True" if value else "❌ False"
+
+    def show_config(self,args):
+        """
+        Print all parameter settings with emoji and colors for better readability.
+        """
+        GREEN = "\033[92m"
+        RED = "\033[91m"
+        CYAN = "\033[96m"
+        YELLOW = "\033[93m"
+        BOLD = "\033[1m"
+        END = "\033[0m"
+
+        print(f"\n{BOLD}{CYAN}📌 ====== Dataset Configuration ======{END}\n")
+
+        # --- Task settings ---
+        print(f"{YELLOW}📝 Task Settings:{END}")
+        print(f"   🐼 COCO Detection : {self._bool_str(self.task_coco_detection)}")
+        print(f"   🙂 Face Detection : {self._bool_str(self.task_face_detection)}")
+        print(f"   🕺 Pose Detection : {self._bool_str(self.task_pose_detection)}")
+        print(f"   🔀 Multi Detection: {self._bool_str(self.task_multi_detection)}\n")
+
+        # --- Multi-detection flags ---
+        print(f"{YELLOW}🛠️ Multi-Detection Enable Flags:{END}")
+        print(f"   🐼 COCO2017 : {self._bool_str(self.md_enable_coco2017)}")
+        print(f"   🙂 FACE     : {self._bool_str(self.md_enable_face)}")
+        print(f"   🕺 POSE     : {self._bool_str(self.md_enable_pose)}\n")
+
+        # --- Thresholds ---
+        print(f"{YELLOW}🎯 Confidence Thresholds:{END}")
+        print(f"   🐼 COCO2017 : {GREEN}{self.coco2017_conf_th}{END}")
+        print(f"   🙂 FACE     : {GREEN}{self.face_conf_th}{END}")
+        print(f"   🕺 POSE     : {GREEN}{self.pose_conf_th}{END}\n")
+
+        # --- Label values ---
+        print(f"{YELLOW}🏷️ Label Values:{END}")
+        print(f"   🙂 Face Label : {GREEN}{self.face_label_value}{END}")
+        print(f"   🕺 Pose Label : {GREEN}{self.pose_label_value}{END}\n")
+
+        # --- Dataset info ---
+        print(f"{YELLOW}📂 Dataset Info:{END}")
+        print(f"   🔢 Num Images   : {GREEN}{self.data_num}{END}")
+        print(f"   📁 Data Dir     : {self.data_dir}")
+        print(f"   📑 Data Type    : {self.data_type}")
+        print(f"   🖼️ Image Dir    : {self.data_img_dir}")
+        print(f"   📝 Label Save   : {self.data_save_txt_dir}")
+        print(f"   📝 Pose Save    : {self.data_pose_save_txt_dir}\n")
+
+        # --- Models ---
+        print(f"{YELLOW}🤖 Models:{END}")
+        print(f"   📦 Detection : {args.detect_model if args.detect_model else RED+'Not Loaded'+END}")
+        print(f"   🙂 Face      : {getattr(args, 'face_model', RED+'Not Loaded'+END)}")
+        print(f"   🕺 Pose      : {args.pose_model if args.pose_model else RED+'Not Loaded'+END}\n")
+
+        # --- Results ---
+        print(f"{YELLOW}🖼️ Result Options:{END}")
+        print(f"   👀 Show Images        : {self._bool_str(self.show_result_im)}")
+        print(f"   💾 Save Images        : {self._bool_str(self.save_result_im)}")
+        print(f"   📏 Save Resolution    : {GREEN}{self.save_result_im_resolution}{END}")
+        print(f"   💾 Save Mapping Result: {self._bool_str(self.save_mapping_result_im)}\n")
+
+        # --- Mapping ---
+        print(f"{YELLOW}🗺️ Mapping Settings:{END}")
+        print(f"   🔄 Enable Mapping      : {self._bool_str(self.enable_mapping)}")
+        print(f"   📋 Label Mapping       : {self.label_mapping}")
+        print(f"   📥 Mapping Input Dir   : {self.mapping_input_label_dir}")
+        print(f"   📤 Mapping Output Dir  : {self.mapping_output_label_dir}")
+        print(f"   🏷️ Mapping Label Name  : {self.mapping_label_name}\n")
+
+        print(f"{BOLD}{CYAN}✅ ====== End of Config ======{END}\n")
+    
+    
+    
     def Save_YOLO_txt_Labels(self, img_path, image):
         """
         Save YOLO-format labels for a given image.

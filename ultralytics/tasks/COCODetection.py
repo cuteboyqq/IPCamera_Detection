@@ -49,8 +49,9 @@ class COCODetection(BaseDataset):
         #     return None
         
         Path(self.data_save_txt_dir).mkdir(parents=True, exist_ok=True)
-        results = self.detect_model.predict(img, conf=0.25, verbose=False)
+        results = self.detect_model.predict(img, conf=self.coco2017_conf_th, verbose=False)
         
+        wanted_cls = set(self.label_mapping.keys())
              
         with new_label_path.open('w') as f:
             for r in results:
@@ -59,8 +60,16 @@ class COCODetection(BaseDataset):
                 
                 for cls_id, box in zip(cls_ids,boxes):
                     cx,cy,w,h = box
-                    label_line = f"{cls_id} {cx:6f} {cy:6f} {w:6f} {h:6f}\n"
-                    f.write(label_line)
+                    new_class_id = None
+                    if self.enable_mapping:
+                        if cls_id in wanted_cls:
+                            new_class_id = self.label_mapping[cls_id]
+                            label_line = f"{new_class_id} {cx:6f} {cy:6f} {w:6f} {h:6f}\n"
+                            f.write(label_line)
+                    else:
+                        label_line = f"{cls_id} {cx:6f} {cy:6f} {w:6f} {h:6f}\n"
+                        f.write(label_line)            
+                    
 
                     if self.show_result_im or self.save_result_im:
                         color =get_color(int(cls_id))
@@ -68,17 +77,25 @@ class COCODetection(BaseDataset):
                         y1 = int((cy - h/2)*img_h)
                         x2 = int((cx + w/2)*img_w)
                         y2 = int((cy + h/2)*img_h)
-                        cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
-                        label_name = COCO_CLASSES[int(cls_id)] if int(cls_id) < len(COCO_CLASSES) else str(cls_id)
-                        cv2.putText(
-                            img,
-                            label_name,
-                            (x1, y1 - 10),              # shift a little higher above box
-                            cv2.FONT_HERSHEY_SIMPLEX,
-                            1.0,                        # ⬅️ font scale (was 0.5)
-                            color,
-                            2                           # ⬅️ thickness (was 1)
-                        )
+                        
+                        if self.enable_mapping and new_class_id is not None:
+                            label_name = self.mapping_label_name[int(new_class_id)] if int(new_class_id) < len(self.mapping_label_name) else str(new_class_id)
+                        elif not self.enable_mapping:
+                            label_name = COCO_CLASSES[int(cls_id)] if int(cls_id) < len(COCO_CLASSES) else str(cls_id)
+                        else:
+                            label_name = None
+                        
+                        if label_name is not None:
+                            cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+                            cv2.putText(
+                                img,
+                                label_name,
+                                (x1, y1 - 10),              # shift a little higher above box
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                1.0,                        # ⬅️ font scale (was 0.5)
+                                color,
+                                2                           # ⬅️ thickness (was 1)
+                            )
                                     
                  
         if self.show_result_im:

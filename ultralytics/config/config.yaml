@@ -9,8 +9,13 @@ MD_ENABLE_LABEL:
   FACE: True       # Use face labels in multi-task mode
   POSE: True       # Use pose labels in multi-task mode
 
+CONFIDENCE_THRESHOLD:
+  COCO2017: 0.50
+  FACE: 0.25
+  POSE: 0.50
+
 LABEL_VALUE:
-  FACE: 80   # Category index assigned for face labels (after COCO classes)
+  FACE: 10   # Category index assigned for face labels (after COCO classes)
   POSE: 0    # Category index for pose labels (0 if starting from scratch)
 
 MODEL:
@@ -32,11 +37,13 @@ DATA:
 SAVE:
   RESULT_IMAGE: True   # Save images with visualized results
   RESULT_IM_RESOLUTION: [720,1280]   # Resolution [height, width] for saved images
+  RESULT_MAPPING_IMAGE: True  # Save mapping images with visualized results
 
 MAPPING:
   ENABLE: True   # Apply class remapping
   INPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Original labels
   OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Remapped labels
   LABEL_MAPPING: {0: 0, 2: 1, 1: 2, 3: 3, 7: 4, 5: 5, 56: 6, 16: 7, 24: 8, 15: 9, 80: 10}   # Original ID → new ID
+  MAPPING_LABEL_NAME: ["person", "car", "bicycle", "motorcycle", "truck", "bus", "chair", "dog", "backpack", "cat", "face"]
 
 

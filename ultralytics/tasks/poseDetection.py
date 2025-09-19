@@ -33,7 +33,7 @@ class PoseDetection(BaseDataset):
         Path(self.data_pose_save_txt_dir).mkdir(parents=True, exist_ok=True)
         
         # Run pose detection
-        results = self.pose_model.predict(img, conf=0.25, verbose=False)
+        results = self.pose_model.predict(img, conf=self.pose_conf_th, verbose=False)
 
         with new_label_path.open("w") as f:
             for r in results:
