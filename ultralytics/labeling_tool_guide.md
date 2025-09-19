@@ -78,6 +78,11 @@ ultralytics/
 2. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
 3. **Prepare your dataset**: Ensure images are in the specified directory
 4. **Run the labeling process**: Execute the main script
+
+```python
+python main_label.py
+# or python3.8 main_label.py # Based on which python version you are using
+```
 5. **Review results**: Check generated labels and visualization images
 
 ## Configuration Guide
@@ -275,6 +280,8 @@ DATA_SAVE_DETECT_TXT_DIR: "/your/output/labels"
 ```yaml
 GENERATE_LABEL_TASK:
   TASK_COCO_DETECTION: True
+  TASK_FACE_DETECTION: False
+  TASK_POSE_DETECTION: False
   TASK_MULTI_DETECTION: False
 ```
 
