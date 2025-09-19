@@ -11,6 +11,7 @@ This labeling tool is designed to automatically generate detection labels for co
 
 ## Set up environment
 Setting up a virtual environment will keep your YOLO + OpenCV project clean and isolated from system packages. Since you’re on Ubuntu/Linux, here’s how you can do it step by step:
+
 🔹 **1. Install venv (if not already installed)**
 ```python
 sudo apt update
