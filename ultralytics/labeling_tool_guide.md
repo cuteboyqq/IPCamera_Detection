@@ -11,7 +11,7 @@ This labeling tool is designed to automatically generate detection labels for co
 
 ## Quick Start
 
-0. **[Must Do] Copy below folder & script & face model into ultarlytics**, because need to use ultralytics model to do auto labeling
+0. **[Must Do] Copy below folder & script & face model into ultarlytics https://github.com/ultralytics/ultralytics**, because need to use ultralytics model to do auto labeling
    1. tasks folder
    2. config folder
    3. engine folder
