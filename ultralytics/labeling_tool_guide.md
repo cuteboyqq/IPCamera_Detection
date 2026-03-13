@@ -79,9 +79,13 @@ ultralytics/
 ```
 ⚠️ Warning: Do not overwrite existing Ultralytics files unless specifically instructed. Only add the required folders, scripts, and model listed above.
 
-2. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
-3. **Prepare your dataset**: Ensure images are in the specified directory
-4. **Run the labeling process**: Execute the main script
+2. **Activate virtual environment**: When activated, your shell prompt will show `(env)` at the beginning. ✅
+  
+3. **Configure the tool**: Edit `config.yaml` to match your dataset paths and requirements
+   
+4. **Prepare your dataset**: Ensure images are in the specified directory
+   
+5. **Run the labeling process**: Execute the main script
 
 ```python
 python main_label.py

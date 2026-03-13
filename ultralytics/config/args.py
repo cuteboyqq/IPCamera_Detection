@@ -36,23 +36,30 @@ class Args:
         self.pose_label_value = config['LABEL_VALUE']['POSE']
         
         ## --- Model ---
-        self.detect_model = config['MODEL']['DETECT_MODEL']
-        self.face_model = config['MODEL']['FACE_MODEL']
-        self.pose_model = config['MODEL']['POSE_MODEL']
+        self.detect_model       = config['MODEL']['DETECT_MODEL']
+        self.face_model         = config['MODEL']['FACE_MODEL']
+        self.pose_model         = config['MODEL']['POSE_MODEL']
+        self.detect_resolution  = config['MODEL']['DETECT_RESOLUTION']
+        self.face_resolution    = config['MODEL']['FACE_RESOLUTION']
+        self.pose_resolution    = config['MODEL']['POSE_RESOLUTION']
         
         ## --- Visualize ---
         self.show_result_im = config['VISUALIZE']['SHOW_RESULT_IM']
+        self.waitkey = config['VISUALIZE']['WAITKEY']
 
         # --- Dataset settings ---
+        self.data_type               = config['DATA']['DATA_TYPE']
+        self.data_video_dir          = config['DATA']['DATA_VIDEO_DIR']
+        self.data_skip_frame         = config['DATA']['DATA_SKIP_FRAME']
         self.data_num                = config['DATA']['DATA_NUM']
         self.data_dir                = config['DATA']['DATA_DIR']
-        self.data_type               = config['DATA']['DATA_TYPE']
         self.data_img_dir            = config['DATA']['DATA_IMG_DIR']
         self.data_save_txt_dir       = config['DATA']['DATA_SAVE_DETECT_TXT_DIR']
         self.data_pose_save_txt_dir  = config['DATA']['DATA_SAVE_POSE_TXT_DIR']
         
         
         # --- labelmapping ---
+        self.copy_label_to_new_label = config['COCO2017_MAPPING']['COPY_LABEL_TO_NEW_LABEL']
         self.enable_mapping = config['COCO2017_MAPPING']['ENABLE']
         self.label_mapping = config['COCO2017_MAPPING']['LABEL_MAPPING']
         self.mapping_input_label_dir = config['COCO2017_MAPPING']['INPUT_LABEL_DIR']
@@ -63,3 +70,9 @@ class Args:
         self.save_result_im = config['SAVE']['RESULT_IMAGE']
         self.save_result_im_resolution = config['SAVE']['RESULT_IM_RESOLUTION']
         self.save_mapping_result_im = config['SAVE']['RESULT_MAPPING_IMAGE']
+        
+        
+        # post processing label
+        self.filter_empty_label  = config['POSTPROC']['FILTER_EMPTY_LABEL']
+        self.post_proc_pose_label = config['POSTPROC']['FILTER_FP_POSE_LABEL']
+        self.iou_th = config['POSTPROC']['IOU_TH']

@@ -1,50 +1,63 @@
 GENERATE_LABEL_TASK:
-  TASK_COCO_DETECTION: False   # Generate labels from COCO2017 dataset only (single-task)
-  TASK_FACE_DETECTION: False   # Generate labels from face dataset only (single-task)
-  TASK_POSE_DETECTION: False   # Generate labels from pose dataset only (single-task)
-  TASK_MULTI_DETECTION: True   # Enable multi-task labeling (merge COCO, face, and pose in one label set)
+  TASK_COCO_DETECTION: False   # Generate COCO2017 object labels only (single-task mode)
+  TASK_FACE_DETECTION: True   # Generate face detection labels only (single-task mode)
+  TASK_POSE_DETECTION: False   # Generate human pose (keypoint) labels only (single-task mode)
+  TASK_MULTI_DETECTION: False   # Enable multi-task labeling (merge COCO, face, and pose in one dataset/label set)
 
 MD_ENABLE_LABEL:
-  COCO2017: True   # Include COCO2017 labels in multi-task mode
-  FACE: True       # Include face labels in multi-task mode
-  POSE: True       # Include pose labels in multi-task mode
+  COCO2017: False   # Include COCO2017 object detection labels in multi-task output
+  FACE: False       # Include face detection labels in multi-task output
+  POSE: True       # Include pose detection labels in multi-task output
 
 CONFIDENCE_THRESHOLD:
-  COCO2017: 0.25   # Confidence threshold for COCO2017 object detection
-  FACE: 0.25       # Confidence threshold for face detection
-  POSE: 0.25       # Confidence threshold for pose detection
+  COCO2017: 0.25   # Confidence threshold for COCO2017 object detections
+  FACE: 0.25       # Confidence threshold for face detections
+  POSE: 0.45      # Confidence threshold for pose (keypoint) detections
 
 LABEL_VALUE:
-  FACE: 10   # Category index assigned to faces (after COCO classes, used in multi-task merge)
-  POSE: 0    # Category index assigned to poses (0 if poses are treated as a separate task)
+  FACE: 80   # Category index assigned to faces in multi-task labels (after COCO remap classes)
+  POSE: 0    # Category index assigned to poses (0 if treated as independent task; not mixed with COCO classes)
 
 MODEL:
-  DETECT_MODEL: yolo11x.pt       # Pretrained detection model (COCO2017 objects)
-  FACE_MODEL: yolov11l-face.pt   # Pretrained face detection model
-  POSE_MODEL: yolo11x-pose.pt    # Pretrained human pose (keypoint) model
+  DETECT_MODEL: yolo11x.pt       # Pretrained YOLO model for COCO2017 object detection
+  FACE_MODEL: yolov11l-face.pt   # Pretrained YOLO model for face detection
+  POSE_MODEL: yolo11x-pose.pt    # Pretrained YOLO model for human pose estimation
+  DETECT_RESOLUTION: 640 # input image resolution width value for coco2017 detection
+  FACE_RESOLUTION: 640 # input image resolution width value for face detection
+  POSE_RESOLUTION: 640 # input image resolution width value for pose detection
 
 VISUALIZE:
-  SHOW_RESULT_IM: True   # Whether to display images with bounding boxes/keypoints during processing
+  SHOW_RESULT_IM: True   # Display processed images with bounding boxes/keypoints in real time
+  WAITKEY: 1             # Delay time (in ms) for cv2.imshow(); set 0 for manual step-through
 
 DATA:
-  DATA_NUM: 99999   # Maximum number of images to process (set high if no limit)
-  DATA_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12"   # Root dataset directory
-  DATA_TYPE: ""      # Data split type, e.g., 'train', 'val', or "" for default
-  DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/images/train2017"   # Directory of source images
-  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Directory to save COCO/face detection YOLO labels
-  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/lane/points/train2017-2025-09-19"   # Directory to save pose (keypoint) YOLO labels
+  DATA_TYPE: "images"    # Input data type: "images" or "videos"
+  DATA_VIDEO_DIR: "/home/ali/Projects/datasets/Ashacam_Raw_Videos/train_videos" # Path to source raw videos (used if DATA_TYPE=videos)
+  DATA_SKIP_FRAME: 10    # Interval for extracting frames from videos (every Nth frame is saved)
+  DATA_NUM: 999999        # Maximum number of images to process (set large to disable limit)
+  DATA_DIR: "/home/ali/Projects/datasets/coco2017"   # Root directory for the dataset
+  DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017/images/train2017"   # Directory of input images
+  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection"   # Save directory for YOLO detection labels (COCO + face)
+  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection"   # Save directory for YOLO pose (keypoint) labels
 
 SAVE:
-  RESULT_IMAGE: True   # Save processed images with visualized bounding boxes/keypoints
-  RESULT_IM_RESOLUTION: [720,1280]   # Output resolution [height, width] for saved result images
-  RESULT_MAPPING_IMAGE: True         # Save visualized results with remapped class IDs (if mapping enabled)
+  RESULT_IMAGE: False              # Save processed images with drawn results (boxes/keypoints)
+  RESULT_IM_RESOLUTION: [320,576] # Output resolution [height, width] for saved result images
+  RESULT_MAPPING_IMAGE: False      # Save processed images with remapped class IDs (according to COCO2017_MAPPING)
 
 COCO2017_MAPPING:
-  ENABLE: True   # Enable remapping of COCO classes to a smaller custom class set
-  INPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-80cls"   # Directory containing original COCO labels (not used currently)
-  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/coco2017-ashacam-part12/labels/detection/train2017-10cls"   # Directory for saving remapped YOLO labels (not used currently)
-  LABEL_MAPPING: {0: 0, 2: 1, 1: 2, 3: 3, 7: 4, 5: 5, 56: 6, 16: 7, 24: 8, 15: 9, 80: 10}   # Mapping dictionary: original class ID → new class ID
-  MAPPING_LABEL_NAME: ["person", "car", "bicycle", "motorcycle", "truck", "bus", "chair", "dog", "backpack", "cat", "face"]   # Ordered class names after remapping
+  COPY_LABEL_TO_NEW_LABEL: True  # Copy original label to new label.txt
+  ENABLE: False   # Enable remapping of original COCO classes to custom reduced class set
+  INPUT_LABEL_DIR: "/home/ali/Projects/datasets/Ashacam_Raw_Videos/Ashacam/images/train2017"   # Path to original COCO 80-class labels (if needed)
+  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection-81cls"  # Path to save reduced/merged YOLO labels
+  LABEL_MAPPING: {}  
+    # Mapping: original COCO class ID → new class ID (used for class reduction/custom dataset)
+  MAPPING_LABEL_NAME: [] #["person", "car", "bicycle", "motorcycle", "truck", "bus", "chair", "dog", "backpack", "cat", "face"]  
+    # Final ordered list of class names after remapping (used for visualization & consistency)
 
+POSTPROC:
+  FILTER_EMPTY_LABEL: True    # Enable filter empty label
+  FILTER_FP_POSE_LABEL: False  # Enable filtering of false-positive pose labels using detection information
+  IOU_TH: 0.5                 # IoU threshold for post-processing (e.g., removing duplicates or filtering overlaps)
 
 
