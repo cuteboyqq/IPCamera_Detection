@@ -10,7 +10,7 @@ class PoseDetection(BaseDataset):
     
     def __init__(self, args):
         super().__init__(args)
-        self.skeleton_save_dir = Path(self.data_dir) / "labels" / "lane" / "points" / "visual_points"  # save dir for drawn images
+        self.skeleton_save_dir = Path(self.data_pose_save_txt_dir).parent / "visual_points"  # save dir for drawn images
         self.skeleton_save_dir.mkdir(parents=True, exist_ok=True)
 
         self.SKELETON = [
@@ -182,7 +182,8 @@ class PoseDetection(BaseDataset):
         # ---- show / save as before ----
         if self.show_result_im:
             im_h, im_w = self.save_result_im_resolution[:2]
-            vis_img = cv2.resize(image if image is not None else img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)
+            # vis_img = cv2.resize(image if image is not None else img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)
+            vis_img = image if image is not None else img
             cv2.imshow("Pose detection", vis_img)
             cv2.waitKey(self.waitkey)
 

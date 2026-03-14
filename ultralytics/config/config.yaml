@@ -1,12 +1,12 @@
 GENERATE_LABEL_TASK:
   TASK_COCO_DETECTION: False   # Generate COCO2017 object labels only (single-task mode)
-  TASK_FACE_DETECTION: True   # Generate face detection labels only (single-task mode)
+  TASK_FACE_DETECTION: False   # Generate face detection labels only (single-task mode)
   TASK_POSE_DETECTION: False   # Generate human pose (keypoint) labels only (single-task mode)
-  TASK_MULTI_DETECTION: False   # Enable multi-task labeling (merge COCO, face, and pose in one dataset/label set)
+  TASK_MULTI_DETECTION: True   # Enable multi-task labeling (merge COCO, face, and pose in one dataset/label set)
 
 MD_ENABLE_LABEL:
-  COCO2017: False   # Include COCO2017 object detection labels in multi-task output
-  FACE: False       # Include face detection labels in multi-task output
+  COCO2017: True   # Include COCO2017 object detection labels in multi-task output
+  FACE: True       # Include face detection labels in multi-task output
   POSE: True       # Include pose detection labels in multi-task output
 
 CONFIDENCE_THRESHOLD:
@@ -19,11 +19,11 @@ LABEL_VALUE:
   POSE: 0    # Category index assigned to poses (0 if treated as independent task; not mixed with COCO classes)
 
 MODEL:
-  DETECT_MODEL: yolo11x.pt       # Pretrained YOLO model for COCO2017 object detection
+  DETECT_MODEL: yolo26x.pt       # Pretrained YOLO model for COCO2017 object detection
   FACE_MODEL: yolov11l-face.pt   # Pretrained YOLO model for face detection
-  POSE_MODEL: yolo11x-pose.pt    # Pretrained YOLO model for human pose estimation
-  DETECT_RESOLUTION: 640 # input image resolution width value for coco2017 detection
-  FACE_RESOLUTION: 640 # input image resolution width value for face detection
+  POSE_MODEL: yolo26x-pose.pt    # Pretrained YOLO model for human pose estimation
+  DETECT_RESOLUTION: 1280 # input image resolution width value for coco2017 detection
+  FACE_RESOLUTION: 1280 # input image resolution width value for face detection
   POSE_RESOLUTION: 640 # input image resolution width value for pose detection
 
 VISUALIZE:
@@ -35,28 +35,28 @@ DATA:
   DATA_VIDEO_DIR: "/home/ali/Projects/datasets/Ashacam_Raw_Videos/train_videos" # Path to source raw videos (used if DATA_TYPE=videos)
   DATA_SKIP_FRAME: 10    # Interval for extracting frames from videos (every Nth frame is saved)
   DATA_NUM: 999999        # Maximum number of images to process (set large to disable limit)
-  DATA_DIR: "/home/ali/Projects/datasets/coco2017"   # Root directory for the dataset
-  DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017/images/train2017"   # Directory of input images
-  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection"   # Save directory for YOLO detection labels (COCO + face)
-  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection"   # Save directory for YOLO pose (keypoint) labels
+  DATA_DIR: "/home/ali/Projects/datasets/coco2017_face_pose"   # Root directory for the dataset
+  DATA_IMG_DIR: "/home/ali/Projects/datasets/coco2017_face_pose/train2017/images"   # Directory of input images
+  DATA_SAVE_DETECT_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-14-yolo26-1280-1280-640/train/labels/detection"   # Save directory for YOLO detection labels (COCO + face)
+  DATA_SAVE_POSE_TXT_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-14-yolo26-1280-1280-640/train/labels/pose/points"   # Save directory for YOLO pose (keypoint) labels
 
 SAVE:
   RESULT_IMAGE: False              # Save processed images with drawn results (boxes/keypoints)
-  RESULT_IM_RESOLUTION: [320,576] # Output resolution [height, width] for saved result images
+  RESULT_IM_RESOLUTION: [720,1280] # Output resolution [height, width] for saved result images
   RESULT_MAPPING_IMAGE: False      # Save processed images with remapped class IDs (according to COCO2017_MAPPING)
 
 COCO2017_MAPPING:
-  COPY_LABEL_TO_NEW_LABEL: True  # Copy original label to new label.txt
+  COPY_LABEL_TO_NEW_LABEL: False  # Copy original label to new label.txt
   ENABLE: False   # Enable remapping of original COCO classes to custom reduced class set
   INPUT_LABEL_DIR: "/home/ali/Projects/datasets/Ashacam_Raw_Videos/Ashacam/images/train2017"   # Path to original COCO 80-class labels (if needed)
-  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-13/train/detection-81cls"  # Path to save reduced/merged YOLO labels
+  OUTPUT_LABEL_DIR: "/home/ali/Projects/datasets/AMR_dataset_2026-03-14/val/detection-81cls"  # Path to save reduced/merged YOLO labels
   LABEL_MAPPING: {}  
     # Mapping: original COCO class ID → new class ID (used for class reduction/custom dataset)
   MAPPING_LABEL_NAME: [] #["person", "car", "bicycle", "motorcycle", "truck", "bus", "chair", "dog", "backpack", "cat", "face"]  
     # Final ordered list of class names after remapping (used for visualization & consistency)
 
 POSTPROC:
-  FILTER_EMPTY_LABEL: True    # Enable filter empty label
+  FILTER_EMPTY_LABEL: False    # Enable filter empty label
   FILTER_FP_POSE_LABEL: False  # Enable filtering of false-positive pose labels using detection information
   IOU_TH: 0.5                 # IoU threshold for post-processing (e.g., removing duplicates or filtering overlaps)
 

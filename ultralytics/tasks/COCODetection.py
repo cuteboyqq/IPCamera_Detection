@@ -270,6 +270,8 @@ class COCODetection(BaseDataset):
                         cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
                         cv2.putText(img, txt, (x1, max(0, y1 - 10)),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, color, 2)
+                    else:
+                        print("label_name is None~~~")
 
         # === Clean up ===
         if not wrote_any and self.filter_empty_label:

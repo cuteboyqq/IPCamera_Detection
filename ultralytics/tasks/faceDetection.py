@@ -46,7 +46,7 @@ class FaceDetection(BaseDataset):
         new_label_path = Path(self.data_save_txt_dir) / (Path(img_path).stem + ".txt")
         
         
-        if new_label_path.exists():
+        if new_label_path.exists() and not self.task_multi_detection:
             #print("txt file exist , skip it ~~~~")
             return image if image is not None else img
         
@@ -58,7 +58,7 @@ class FaceDetection(BaseDataset):
             str(img_path)
             .replace("/images/", "/labels/detection/")
         ).with_suffix(".txt")
-        #print(f"original_label_path:{original_label_path}")
+        # print(f"original_label_path:{original_label_path}")
 
         Path(self.data_save_txt_dir).mkdir(parents=True, exist_ok=True)
 
@@ -67,7 +67,7 @@ class FaceDetection(BaseDataset):
         # -------- copy original label first --------
         if original_label_path.exists() and self.copy_label_to_new_label:
             shutil.copy(original_label_path, new_label_path)
-        else:
+        elif not self.task_multi_detection:
             # print("create empty file --> original doesn't exist")
             new_label_path.touch()   # create empty file if original doesn't exist
 
@@ -108,7 +108,7 @@ class FaceDetection(BaseDataset):
             key = cv2.waitKey(self.waitkey)
             
         # === Save annotated image if enabled ===
-        if self.save_result_im and not self.task_pose_detection:
+        if self.save_result_im and not self.task_pose_detection and not self.md_enable_pose:
             im_h,im_w = self.save_result_im_resolution[:2]
             result_path = self.result_img_dir / Path(img_path).name
             vis_img = cv2.resize(image if image is not None else img, (im_w, im_h), interpolation=cv2.INTER_LINEAR)

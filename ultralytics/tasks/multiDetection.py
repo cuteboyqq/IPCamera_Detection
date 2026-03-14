@@ -49,18 +49,22 @@ class MultiDetectTask(BaseDataset):
                     img_path=img_path, image=None
                 )
             if result_img is not None:
+                # print("result_img is not None")
                 if self.md_enable_face:
                     result_img = self.face_det.Save_YOLO_txt_Labels(
                         img_path=img_path, image=result_img
                     )
                 
                 if self.md_enable_pose:
+                    # print(f"md_enable_pose : {self.md_enable_pose}")
                     if not self.md_enable_coco2017 and not self.md_enable_face:
                         result_img = None
                 
                     self.pose_det.Save_YOLO_txt_Labels(
                         img_path=img_path, image=result_img
                     )
+            else:
+                print("Result image is None !!")
         
         if self.post_proc_pose_label and self.md_enable_pose:
             print(f"Start filtering FP pose detection labels...")
